@@ -7,7 +7,9 @@ The project consists of a prototype for a wheelchair that can be controlled via 
 ### Team
 
 Alana Crognale
+
 Eva Esteban
+
 Tomi Kalejaiye
 
 ### Rough Form
