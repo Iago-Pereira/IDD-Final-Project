@@ -1,6 +1,6 @@
 # IDD-Final-Project
 
-# Project Idea
+## Project Idea
 
 The project consists of a prototype for a wheelchair that can be controlled via EEG sensing.
 
