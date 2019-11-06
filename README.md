@@ -1,20 +1,20 @@
 # IDD-Final-Project
 
-## Project Idea
+### Project Idea
 
 The project consists of a prototype for a wheelchair that can be controlled via EEG sensing.
 
-# Team
+### Team
 
 Alana Crognale
 Eva Esteban
 Tomi Kalejaiye
 
-# Rough Form
+### Rough Form
 
 
-# Expected Parts
+### Expected Parts
 
 EEG headset, arduino, bluetooth module, wheels, motors, small physical wheelchair prototype 
 
-# Interaction Plan
+### Interaction Plan
