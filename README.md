@@ -15,6 +15,8 @@ Tomi Kalejaiye
 
 ### Expected Parts
 
-EEG headset, arduino, bluetooth module, wheels, motors, small physical wheelchair prototype 
+EEG headset, arduino, bluetooth module, wheels, motors, small physical wheelchair prototype.
 
 ### Interaction Plan
+
+The person will wear the headset and control the wheelchair with it.
