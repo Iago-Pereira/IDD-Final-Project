@@ -14,11 +14,11 @@ Tomi Kalejaiye
 
 ### Rough Form
 
-<img align="center" width="500" height="500" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0893.jpeg">
-<img align="center" width="500" height="500" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0894.jpeg">
-<img align="center" width="500" height="500" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0895.jpeg">
-<img align="center" width="500" height="500" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0896.jpeg">
-<img align="center" width="500" height="500" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0902.jpeg">
+<img align="center" width="375" height="500" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0893.jpeg">
+<img align="center" width="375" height="500" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0894.jpeg">
+<img align="center" width="375" height="500" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0895.jpeg">
+<img align="center" width="375" height="500" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0896.jpeg">
+<img align="center" width="375" height="500" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0902.jpeg">
 
 ### Expected Parts
 
