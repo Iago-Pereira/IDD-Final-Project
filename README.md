@@ -18,7 +18,7 @@ Tomi Kalejaiye
 <img align="left" width="100" height="100" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0894.jpeg">
 <img align="left" width="100" height="100" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0895.jpeg">
 <img align="left" width="100" height="100" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0896.jpeg">
-<img align="left" width="100" height="100" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0904.jpeg">
+<img align="left" width="100" height="100" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0902.jpeg">
 ### Expected Parts
 
 EEG headset, arduino, bluetooth module, wheels, motors, small physical wheelchair prototype.
