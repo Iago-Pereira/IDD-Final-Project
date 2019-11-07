@@ -15,10 +15,10 @@ Tomi Kalejaiye
 ### Rough Form
 
 <img align="left" width="100" height="100" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0893.jpeg">
-![Img 2](https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0894.jpeg)
-![Img 3](https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0895.jpeg)
-![Img 4](https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0896.jpeg)
-![Img 5](https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0902.jpeg)
+<img align="left" width="100" height="100" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0894.jpeg">
+<img align="left" width="100" height="100" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0895.jpeg">
+<img align="left" width="100" height="100" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0896.jpeg">
+<img align="left" width="100" height="100" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0904.jpeg">
 ### Expected Parts
 
 EEG headset, arduino, bluetooth module, wheels, motors, small physical wheelchair prototype.
