@@ -56,6 +56,7 @@ A link to the final code can be found below.
 
 ### Testing and Debugging 
 
+Even though the initial idea for the project was to create the full wheelchair prototype, the final deliverable was a proof of concept to demonstrate that both the wheels and the LEDs can be controlled with the mind. This simplification came from the large amount of time that was spent on debugging and understanding the data read from the headset, as opposed to building a small wheel chair. 
 
 
 ## Project Video 
