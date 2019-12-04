@@ -56,8 +56,11 @@ A link to the final code can be found below.
 
 ### Testing and Debugging 
 
-Even though the initial idea for the project was to create the full wheelchair prototype, the final deliverable was a proof of concept to demonstrate that both the wheels and the LEDs can be controlled with the mind. This simplification came from the large amount of time that was spent on debugging and understanding the data read from the headset, as opposed to building a small wheel chair. 
+Even though the initial idea for the project was to create the full wheelchair prototype, the final deliverable was a proof of concept to demonstrate that both the wheels and the LEDs can be controlled with the mind. This simplification was implemented for two main reasons: a large amount of time had to be spent on debugging and understanding the data being read from the headset, rather than building a small wheel chair structure, and green/red LED functionality to provide feedback on the chair movement was included. Even though the light feature was not in the original plan, user testing proved it to be necessary for the person to know whether the chair was moving and they were concentrating appropriately, so the feature was prioritized.
 
+Firstly, in order to read the values from the headset, a baud rate of 9600 bits/sec was initially used. We then realized that this only worked for the Force Trainer I device, but the new Force Trainer II used a baud rate of 57600. Secondly, we found that the packets from the headset were being sent to the Arduino and filling up the buffer at a very high speed, causing even printing to serial to corrupt the data reading process. We therefore decided to remove all delays and limit the use of the serial interface. Once these errors were fixed, we could read the values from the headset correctly. 
+
+In order to use the motor and prevent it from drawing too much power, we used a diode and a transistor. Debugging the circuit, we found that the transistor was damaged and exchanged it for a new one. We found this fault by isolating and testing each component, as well as testing the hardware separate from the firmware.
 
 ## Project Video 
 
