@@ -32,9 +32,14 @@ The person will wear the headset, which will be connected to the wheelchair, and
 
 ## Project Implementation 
 
-### Hardware Components
+### Individual Hardware Components
 
 We bought the Star Wars Force Trainer II toy, which contains an EEG sensing headset that uses a NeuroSky board. We also gathered a green LED and a green LED with the corresponding 220 Ohm resistors, and a motor with the corresponding components to build a protective circuit around it: a transistor, a 22 KOhm resistor, and a diode. We used an Arduino Uno to control the different components, and jumper wires to connect them together. 
+
+### System Description
+
+
+### Testing and Debugging 
 
 ## Project Video 
 
