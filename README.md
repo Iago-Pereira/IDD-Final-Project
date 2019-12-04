@@ -48,9 +48,15 @@ The state diagram for the product can be found below.
 
 ### Firmware
 
-In order to read from the headset, the code from https://github.com/JimRoskind/NeuroskyHacking was used as a starting point. The code and libraries were later modified in order to read only the attention value from the headset, and remove the parts of the code reading and processing unnecessary values. Additional code was incorporated to interact with the LEDs and the wheel motor. 
+In order to read from the headset, the code from https://github.com/JimRoskind/NeuroskyHacking was used as a base code. The code and libraries were later modified in order to read only the attention value from the headset, and remove the parts of the code reading and processing unnecessary values. Additional code was incorporated to interact with the LEDs and the wheel motor. 
+
+A link to the final code can be found below.
+
+[Link to Code](ForceTrainerV2.ino)
 
 ### Testing and Debugging 
+
+
 
 ## Project Video 
 
