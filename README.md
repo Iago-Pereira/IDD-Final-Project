@@ -32,7 +32,7 @@ The person will wear the headset, which will be connected to the wheelchair, and
 
 ## Project Implementation 
 
-### Individual Hardware Components
+### Hardware Components
 
 We bought the Star Wars Force Trainer II toy, which contains an EEG sensing headset that uses a NeuroSky board. We also gathered a green LED and a green LED with the corresponding 220 Ohm resistors, and a motor with the corresponding components to build a protective circuit around it: a transistor, a 22 KOhm resistor, and a diode. We used an Arduino Uno to control the different components, and jumper wires to connect them together. 
 
@@ -45,6 +45,10 @@ The attention values range from 0 to 100, with 0 indicating that the user is not
 The state diagram for the product can be found below. 
 
 ![](State_Diagram.jpeg)
+
+### Firmware
+
+In order to read from the headset, the code from https://github.com/JimRoskind/NeuroskyHacking was used as a starting point. The code and libraries were later modified in order to read only the attention value from the headset, and remove the parts of the code reading and processing unnecessary values. Additional code was incorporated to interact with the LEDs and the wheel motor. 
 
 ### Testing and Debugging 
 
