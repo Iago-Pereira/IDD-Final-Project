@@ -52,7 +52,7 @@ In order to read from the headset, the code from https://github.com/JimRoskind/N
 
 A link to the final code can be found below.
 
-[Link to Code](ForceTrainerV2.ino)
+[Link to Code](https://github.com/evaesteban/IDD-Final-Project/blob/master/ForceTrainerV2/ForceTrainerV2.ino)
 
 ### Testing and Debugging 
 
