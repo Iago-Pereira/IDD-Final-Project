@@ -1,8 +1,10 @@
 # IDD-Final-Project
 
-### Project Idea
+## Project Description and Initial Plan
 
-The project consists of a prototype for a wheelchair that can be controlled via EEG sensing.
+### Project Idea and Application
+
+The project consists of a prototype for a wheelchair that can be controlled via electroencephalogram (EEG) sensing. The main application of this wheelchair is to enable paralyzed individuals to have control over their transportation by using their thoughts.
 
 ### Team
 
@@ -12,7 +14,7 @@ Eva Esteban
 
 Tomi Kalejaiye
 
-### Rough Form
+### Rough Form and Paper Prototype
 
 <img align="center" width="375" height="500" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0893.jpeg">
 <img align="center" width="500" height="375" src="https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_0894.jpeg">
@@ -22,8 +24,14 @@ Tomi Kalejaiye
 
 ### Expected Parts
 
-EEG headset, arduino, bluetooth module, wheels, motors, small physical wheelchair prototype.
+EEG headset, arduino, wheels, motors, LEDs, small physical wheelchair prototype.
 
 ### Interaction Plan
 
-The person will wear the headset and control the wheelchair with it.
+The person will wear the headset, which will be connected to the wheelchair, and control the wheelchair movement with it.
+
+## Project Implementation 
+
+### Hardware Components
+
+We bought the Star Wars Force Trainer II toy, which contains an EEG sensing headset that uses a NeuroSky board. We also gathered a green LED and a green LED with the corresponding 220 Ohm resistors, and a motor with the corresponding components to build a protective circuit around it: 
