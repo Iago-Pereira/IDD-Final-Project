@@ -437,7 +437,7 @@ bool PrintMostRecentData() {
       Serial.write("  ");
       Serial.write(data_value_names[print_index]);
       Serial.write("=");
-      //Serial.print(data_values[print_index]);
+      Serial.print(data_values[print_index]);
       print_index++;
     } else {
       // Watch for the augmented values, but only print
@@ -448,7 +448,7 @@ bool PrintMostRecentData() {
           Serial.println();  // Put on separate line.
           Serial.write(data_value_names[print_index]);
           Serial.write("=");
-          //Serial.print(data_values[print_index]);
+          Serial.print(data_values[print_index]);
           data_values[print_index++] = 256;  // Prevent reprint.
           break;  // come back later to print more..
         }  // End printing augmentation
@@ -456,7 +456,7 @@ bool PrintMostRecentData() {
       }  // No more augmented values either.
     }
     if (print_index >= DATA_ARRAY_SIZE) {
-      //Serial.println();  // Carriage return
+      Serial.println();  // Carriage return
       if (eeg_values_loaded_for_print > 1) {
         errors[SKIPPED_EEG_DATA_ERROR]++;
       }
@@ -469,22 +469,22 @@ bool PrintMostRecentData() {
   // We've never seen these print, so they're not in the above
   // array, but are interesting to watch out for.
   if (256 > heart_rate) {
-    //Serial.print(F("heart_rate="));
-    //Serial.println(heart_rate);
+    Serial.print(F("heart_rate="));
+    Serial.println(heart_rate);
     heart_rate = 256;  // Real data is ALWAYS less than this.
     return true;
   }
 
   if (256 > raw_wave_8_bit) {
-    //Serial.print(F("raw_wave_8_bit="));
-    //Serial.println(raw_wave_8_bit);
+    Serial.print(F("raw_wave_8_bit="));
+    Serial.println(raw_wave_8_bit);
     raw_wave_8_bit = 256;  // Real data is ALWAYS less than this.
     return true;
   }
 
   if (256 > zero_raw_marker) {
-    //Serial.print(F("zero_raw_marker="));
-    //Serial.println(zero_raw_marker);
+    Serial.print(F("zero_raw_marker="));
+    Serial.println(zero_raw_marker);
     zero_raw_marker = 256;  // Real data is ALWAYS less than this.
     return true;
   }
@@ -572,9 +572,9 @@ bool PlotMostRecentData() {
 
   if (plot_index >= DATA_ARRAY_SIZE) { // We're done printing vector values.
     Serial.write("\t");
-    //Serial.print(0);
+    Serial.print(0);
     Serial.write("\t");
-    //Serial.println(total_plotting_height);
+    Serial.println(total_plotting_height);
     plot_index = 0;  // Start next line at the beginning of data_snapshot.
     plot_interpolations++;  // We completed one more intepolated set.
     if (plot_interpolations > LAST_PLOT_INTERPOLATION) {
@@ -604,7 +604,7 @@ bool PlotMostRecentData() {
   }
 
   if (!need_to_plot_value[plot_index]) {
-    //Serial.print(0);  // Suppress real value on plotter.
+    Serial.print(0);  // Suppress real value on plotter.
   } else {
     // Interpolate a point on the line from old value to new (current)
     // value.
@@ -612,7 +612,7 @@ bool PlotMostRecentData() {
                       prev_snapshot[plot_index] +
                       plot_interpolations * data_snapshot[plot_index]) /
                      LAST_PLOT_INTERPOLATION;
-    //Serial.print(value);
+    Serial.print(value);
   }
 
   plot_index++;
@@ -636,12 +636,10 @@ void UpdatePlotSelection() {
   for (uint8_t i = 0; i < PUSH_BUTTON_COUNT; i++) {
     uint8_t pin = 2 + i;
     int reading = digitalRead(pin);
-
     if (reading != button_recent_state[i]) {
       button_change_millis[i] = millis();
       button_recent_state[i] = reading;
     }
-
     if ((millis() - button_change_millis[i]) > debounce_delay) {
       if (reading != button_state[i]) {
         button_state[i] = reading;  // State has changed officially.
@@ -691,7 +689,7 @@ void PrintNewErrorCounts() {
     if (errors[i] > 0) {
       Serial.write(error_names[i]);
       Serial.write("=");
-      //Serial.print(errors[i]);
+      Serial.print(errors[i]);
       Serial.write("\n");
       errors[i] = 0;
       break;
@@ -709,43 +707,43 @@ void OptionalPrintStats() {
 
     case 1:
       Serial.print(F("Max available "));
-      //Serial.println(max_available_bytes_to_process);
+      Serial.println(max_available_bytes_to_process);
       break;
 
     case 2:
       Serial.print(F("Max pause ms "));
-     // Serial.println(max_duration_between_byte_processing);
+      Serial.println(max_duration_between_byte_processing);
       break;
 
     case 3:
-      //Serial.print(F("Payloads "));
-      //Serial.println(payload_process_count);
+      Serial.print(F("Payloads "));
+      Serial.println(payload_process_count);
       break;
 
     case 4:
-      //Serial.print(F("Payload Bytes "));
-      //Serial.println(payload_byte_count);
+      Serial.print(F("Payload Bytes "));
+      Serial.println(payload_byte_count);
       break;
 
     case 5:
-      //Serial.print(F("Total Bytes "));
-      //Serial.println(4 * payload_process_count + payload_byte_count);
+      Serial.print(F("Total Bytes "));
+      Serial.println(4 * payload_process_count + payload_byte_count);
       break;
 
     case 6:
-      //Serial.print(F("Total ms "));
-      //Serial.println(millis() - start_time_millis);
+      Serial.print(F("Total ms "));
+      Serial.println(millis() - start_time_millis);
       break;
 
     case 7:
-      //Serial.print(F("Avg Bytes/s "));
-      //Serial.println((4 * payload_process_count + payload_byte_count) * 10 /
-                     //((millis() - start_time_millis) / 100));
+      Serial.print(F("Avg Bytes/s "));
+      Serial.println((4 * payload_process_count + payload_byte_count) * 10 /
+                     ((millis() - start_time_millis) / 100));
       break;
 
     case 8:
-      //Serial.print(F("Raw codes "));
-      //Serial.println(raw_code_count);
+      Serial.print(F("Raw codes "));
+      Serial.println(raw_code_count);
       break;
 
     default:
@@ -783,7 +781,7 @@ void setup() {
   digitalWrite(LED_PIN, LOW);
   digitalWrite(LED_GREEN_PIN, LOW);
   digitalWrite(LED_RED_PIN, LOW);
-  
+
   Serial.begin(57600);  // ForceTrainer defaults to this baud rate.
 
   while (!Serial ) { // Until we're ready...
@@ -792,8 +790,8 @@ void setup() {
   start_time_millis = millis();
   // See how much space there is to write, without having to wait
   int MAX_WRITE_BUFFER = Serial.availableForWrite();
-  //Serial.print(F("When empty, write buffer has room for: "));
-  //Serial.println(MAX_WRITE_BUFFER);  // Should be 63
+  Serial.print(F("When empty, write buffer has room for: "));
+  Serial.println(MAX_WRITE_BUFFER);  // Should be 63
 }
 
 void loop() {
@@ -830,9 +828,9 @@ void loop() {
     OptionalPrintStats();
   }
 
-  //Serial.println(data_values[ATTENTION_INDEX]);
-  
-  if (data_values[ATTENTION_INDEX] > 50) {
+  Serial.println(data_values[ATTENTION_INDEX]);
+
+  if (data_values[ATTENTION_INDEX] > 60) {
     //digitalWrite(LED_PIN, HIGH);
     analogWrite(MOTOR_PIN, 90);
     digitalWrite(LED_GREEN_PIN, HIGH); // Eva
