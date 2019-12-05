@@ -64,4 +64,8 @@ In order to use the motor and prevent it from drawing too much power, we used a 
 
 ## Project Video 
 
-[Link to Video](Wheel_Video.mp4)
+[Link to Initial Video](Wheel_Video.mp4)
+
+We then incorporated a battery to power the device for increased portability, as well as a graphic display to be able to read the raw attention values the user outputs to the device in real time.
+
+[Link to Updated Video](https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_1105.mov)
