@@ -58,15 +58,26 @@ A link to the final code can be found below.
 
 Even though the initial idea for the project was to create the full wheelchair prototype, the final deliverable was a proof of concept to demonstrate that both the wheel and the LEDs can be controlled solely by using a person's concentration levels. This simplification was implemented for two main reasons: a large amount of time had to be spent on debugging and understanding the data being read from the headset rather than building a small wheel chair structure, and green/red LED functionality to provide feedback on the chair movement was included. Even though the LEDs feature was not in the original project description, user testing proved it to be necessary for the person to know whether the chair was moving and they were concentrating appropriately, so building this feature was prioritized in order to make the device more interactive.
 
-To begin with, in order to solder 
 In order to read the values from the headset, a baud rate of 9600 bits/sec was used. We then realized that this only worked for the Force Trainer I device, but the new Force Trainer II used a baud rate of 57600. Secondly, we found that the packets from the headset were being sent to the Arduino and filling up the buffer at a very high speed, causing even printing to serial to corrupt the data reading process. We therefore decided to remove all delays and limit the use of the serial interface to debugging when needed. Once these errors were fixed, we could read the values from the headset correctly. 
 
 In order to use the motor and prevent it from drawing too much power, we used a diode and a transistor. Debugging the circuit, we found that the transistor was damaged and exchanged it for a new one. We found this fault by isolating and testing each component, as well as testing the hardware separate from the firmware.
 
+To print the values in the graphic display every 100 ms, we used millis() instead of delay(), as we found using delay() prevented the Metro Mini from reading the headset values and caused information loss.
+
+There were many other debugging instances, but the above three are fundamental to the correct functioning of the project and likely to happen to other people building similar devices, so we decided to highlight them.
+
 ## Project Video 
+
+An initial video of the barebone product can be found below.
 
 [Link to Initial Video](Wheel_Video.mp4)
 
-We then incorporated a battery to power the device for increased portability, as well as a graphic display to be able to read the raw attention values the user outputs to the device in real time.
+We then incorporated a battery for increased portability, as well as a graphic display to be able to read the attention values the user outputs to the device in real time.
 
-[Link to Updated Video](https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_1105.mov)
+[Link to Final Video](https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_1105.mov)
+
+
+## Future Work
+
+In the future, we would like to build a full wheelchair prototype which is also able to spin, as explained in the introduction above. We would also calibrate the sensor by measuring the brain waves of different people and using more brain wave information apart from the attention values - these were used to prove the concept.
+
