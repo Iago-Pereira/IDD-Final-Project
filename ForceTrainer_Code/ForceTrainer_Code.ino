@@ -1,92 +1,36 @@
-// Code modified from Force Trainer code by authors Brianna Roskind and Jim Roskind
-// Final Project Interactive Device Design 2019
-//
-// WIRING INSTRUCTIONS
-//
-// The "T" terminal on the Neurosky board should be connected to the
-// "Rx" (Pin 0) on the Auduino board, through a 220 ohm resistor. The
-// ground of the Neurosky board should be connected to the ground of
-// the Arduino board.
-//
-// 10 momementary contact (pushbutton) switches should be used to
-// provide values to Arduino pins 2 - 11.  We suggest that the signal
-// wires should be fully connected to ground via 10K ohm resistors,
-// and intermittently "pulled up" to 3.3v via the pushshbotton
-// switches. The switches connecting to pins 2-11 should be labeled
-// respectively:
-//
-//      "Delta"
-//      "Theta"
-//      "L-alpha"
-//      "H-alpha"
-//      "L-beta"
-//      "H-beta"
-//      "L-gamma"
-//      "M-gamma"
-//      "Meditation"
-//      "Attention"
-//
-// PROGRAM EXECUTION INSTRUCTIONS
-//
-// The program should be run while connected to the Arduino IDE Serial
-// Plotter.  a  The pushbutton switches can be use to taggle
-// graphing of any/all of the 8 power bands (as well as Attention,
-// Meditation).
-//
-//
-// DEBUGGING FEATURES AND INSTRUMENTATION
-//
-// The basic electrical connection from the switches can be validated
-// by watching the Arduino on-board LED (connected to Pin 13).  It
-// should illuminate when any of the pushbuttons are depressed.
-//
-// To debug the data printing for the graphics, switch to using the
-// Arduino IDE Serial Terminal (instead of the Serial Plotter).  You
-// should then see about 10 lines of 11 data values being printed once
-// per second. Pressing each of the buttons should cause the
-// corresponding value to display, or be replaced by value 0 (which
-// graphs invisibly along the X-axis in a Serial Plotter). The last
-// interger plotted on each line is the Signal Strength, which is
-// always enabled.
-//
-// If there are any errors (loss of sync? unexpected data?), then
-// error counts will be printed on the terminal.
-//
-// To see the data with tags (rather than a vector of 11 integers) in
-// the Serial Terminal window, hold down any three pushbottons at the
-// same time, and the program will toggle into a text mode, listing
-// names and values, rather than just a vector.
-//
-// To see additional performance statistics, depress any 2 buttons at
-// the same time, and several stats will be printed.  This information
-// is most helpful IF you significantly modify the program. The stats
-// include the duration of time between calls to ProcessBytes(), which
-// MUST be called every 10ms to ensure that no bytes are lost (for
-// lack of buffer space).  The stats also show the maximum number of
-// bytes ever observed on entry to ProcessBytes().  With a buffer of
-// 63 bytes, this metric should always be well under 63, or else there
-// is a risk that bytes were lost.  Note that byte-loss almost always
-// induces various errors, which are printed whenever you are running
-// in Auduino IDE Serial Terminal mode.
+// Code modified from the original Neurosky Hacking code by Brianna Roskind and Jim Roskind (https://github.com/JimRoskind/NeuroskyHacking)
+// Final Project for ECE 5413 Development and Design of Interactive Devices 2019
 
-//------------------------------------------------------
-// Select output for Serial Terminal, vs Serial Plotter.  Toggle
-// selection during a run by holding down 3 buttons.
-#include <Servo.h>
-Servo myservo;
+// to plot data
 bool plot_it = true;
-const int LED_PIN = 13;  // Light when any button is pressed.
-const int LED_GREEN_PIN = 8; // Eva
-const int LED_RED_PIN = 11; // Eva
-const int MOTOR_PIN = 6; // Eva
-// Currently, pressing 2 buttons at same time causes stats to print
-// Pressing 3 buttons at same time taggles Plot vs Terminal output
-// modes.
+
+// variables for LEDs and motor pins
+const int LED_PIN = 13;  // Light when any button is pressed (default).
+const int LED_GREEN_PIN = 8; 
+const int LED_RED_PIN = 11; 
+const int MOTOR_PIN = 6; 
+
+// we are not using any buttons at this time (left for future dev)
 #define PUSH_BUTTON_COUNT 0
+
+// graphic display initialization
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 32 // OLED display height, in pixels
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+#define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+// variables to print to graphic display using millis()
+int period = 100;
+unsigned long time_now = 0;
 
 //------------------------------------------------------
 // 8-bit Data extracted from payload messages.
-// 256 means no new value. We don't currently plat this data,
+// 256 means no new value. We don't currently plot this data,
 // but it is parsed out to simplify extending the code, and any
 // values received *ARE* printed in Terminal (non-plotting) mode.
 uint16_t heart_rate = 256;
@@ -182,8 +126,6 @@ uint32_t start_time_millis = 0;
 uint8_t optional_stats_print_requested = 0;
 //------------------------------------------------------
 
-int angle = 0;
-
 void ProcessPayload(uint8_t payload[], uint8_t payload_size) {
   // Process the bytes in the payload buffer, assuming the WHOLE
   // payload has been collected, and it had a perfect checksum.
@@ -216,15 +158,6 @@ void ProcessPayload(uint8_t payload[], uint8_t payload_size) {
       case 0x7:
         zero_raw_marker = payload[++i];
         break;
-
-      /*
-        // Mentioned in the June 28, 2010 spec, but not in the May 7,
-        // 2015 spec We assume it is discontinued, but *some* old
-        // chips may support this.
-        case 0x16: // Blink Strength
-        blink_strength = payload[++i];
-        break;
-      */
 
       case 0x80:
         // "Raw Wave" data. Not sure how to use, so we'll discard it.
@@ -342,8 +275,6 @@ void ProcessAllReceiveBufferBytes() {
         if (data == SYNC) {
           device_read_state = WAITING_FOR_SECOND_SYNC;
         } else {
-          // Serial.write("Unexpected 0x");
-          // Serial.println(data, HEX);
           errors[MISSING_SYNC_ERROR]++;
           errors[DISCARDED_BYTE_ERROR]++;
         }
@@ -351,10 +282,8 @@ void ProcessAllReceiveBufferBytes() {
 
       case WAITING_FOR_SECOND_SYNC:
         if (data == SYNC) {
-          // Serial.println("Got SYNCs");
           device_read_state = WAITING_FOR_LENGTH;
         } else {
-          // Serial.println("Discarding SYNC and following byte");
           errors[MISSING_SYNC_ERROR]++;
           errors[DISCARDED_BYTE_ERROR] += 2;  // Two bytes discarded.
           device_read_state = WAITING_FOR_FIRST_SYNC;
@@ -366,15 +295,11 @@ void ProcessAllReceiveBufferBytes() {
           expected_payload_size = data;
           payload_read = 0;
           payload_checksum = 0;
-          // Serial.write("Got length ");
-          // Serial.println(data);
           device_read_state = READING_PAYLOAD;
         } else {
           errors[BAD_PAYLOAD_LENGTH_ERROR]++;
           errors[DISCARDED_BYTE_ERROR]++;  // The first SYNC character.
           if (data != SYNC) {
-            // Serial.write("bad length ");
-            // Serial.println(data);
             errors[DISCARDED_BYTE_ERROR] += 2;  // The second SYNC plus length
             device_read_state = WAITING_FOR_FIRST_SYNC;
           }
@@ -392,7 +317,6 @@ void ProcessAllReceiveBufferBytes() {
         // Time to validate checksum;
         uint8_t valid_checksum = ~data;
         if (valid_checksum == payload_checksum) {
-          // Serial.println("Validated checksum");
           ProcessPayload(payload, payload_read);  // Finally a payload to process!
         } else {
           errors[BAD_CHECKSUM_ERROR]++;
@@ -619,55 +543,6 @@ bool PlotMostRecentData() {
   return true;  // We printed something.
 }
 
-void UpdatePlotSelection() {
-  // Check to see if the user has pressed any of the buttons, which
-  // can toggle whether we display the real data in the plotter
-  // output. Techniques used here are modeled after the Arduino
-  // Debounce example (except that we have an array of buttons to
-  // monitor, and array of results to update). Most critically, we
-  // don't block or wait to do the debouncing
-  static long button_change_millis[DATA_ARRAY_SIZE];  // Last time button changed.
-  static int button_recent_state[DATA_ARRAY_SIZE];  // Last observed state.
-  static int button_state[DATA_ARRAY_SIZE];  // Debounced official state.
-  static uint8_t button_pressed_count = 0;  // Turn on LED if any are pressed.
-  const unsigned long debounce_delay = 100;  // milliseconds
-
-  /*uint8_t count = 0;  // Count of buttons on.
-  for (uint8_t i = 0; i < PUSH_BUTTON_COUNT; i++) {
-    uint8_t pin = 2 + i;
-    int reading = digitalRead(pin);
-    if (reading != button_recent_state[i]) {
-      button_change_millis[i] = millis();
-      button_recent_state[i] = reading;
-    }
-    if ((millis() - button_change_millis[i]) > debounce_delay) {
-      if (reading != button_state[i]) {
-        button_state[i] = reading;  // State has changed officially.
-        if (reading == HIGH) {
-          // We must change a state and total count.
-          need_to_plot_value[i] = !need_to_plot_value[i];
-        }
-      }
-    }
-    if (button_state[i] == HIGH) {
-      count++;
-    }
-  }
-  if (count != button_pressed_count) {
-    if (count > button_pressed_count) {  // Rising count
-      if (count == 2) {
-        optional_stats_print_requested = 1;  // Start printing stats.
-      }
-      if (count == 3) {
-        plot_it = !plot_it;  // Toggle plotting mode vs displaying data.
-      }
-    }
-    // Push count to global variable that persists.
-    button_pressed_count = count;
-    //digitalWrite(LED_PIN, (button_pressed_count > 0) ? HIGH : LOW);
-  } */
-}
-
 void PrintNewErrorCounts() {
   // Return true iff we printed any data.
 
@@ -755,6 +630,12 @@ void OptionalPrintStats() {
 
 void setup() {
 
+  // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3C for 128x32
+    Serial.println(F("SSD1306 allocation failed"));
+    for (;;); // Don't proceed, loop forever
+  }
+
   for (uint8_t i = 0; i < DATA_ARRAY_SIZE; i++) {
     data_values[i] = 0;
     // Default to plotting everything.
@@ -797,26 +678,8 @@ void setup() {
 void loop() {
   // Process all the incoming bytes we can, so that we don't "drop"
   // any because there is no room to buffer them up.
-    ProcessAllReceiveBufferBytes();
-  // We are now guaranteed that the Serial input buffer is empty. AT
-  // 57600 baud, we'll get (worst case) about 5,760 bytes per second
-  // (byte == 8 bits, but transmission uses an extra two bits, for a
-  // total of 10 bits per byte). We can (possibly) overrun the 63
-  // character input buffer in as little as 10 ms, so we have to be
-  // careful to come back ASAP.  As a result, the remaining functions
-  // must NOT block (e.g., wait for room in an output buffer to be
-  // created), but can generally push (write) to an output buffer that
-  // *has* available room.  Running on the Arduino UNO, we usualy get
-  // back to processing bytes before the input buffer can queue up 3
-  // packets, with the code that follows.
-
-  // Select whether to output for Serial Plotter vs Serial Monitor.
-  // Serial Monitor prints more readable text, including the label for
-  // each numeric value, as well as including error counts, and could
-  // be used to see/debug what the plotter output looks like in
-  // numeric form.  The Serial Plotter needs an unadorned line of 11
-  // numbers on each output line, and uses them to create the plat(s).
-  UpdatePlotSelection();  // Monitor push buttons.
+  ProcessAllReceiveBufferBytes();
+  
   bool busy_printing_line = false;
   if (plot_it) {
     busy_printing_line = PlotMostRecentData();
@@ -828,18 +691,32 @@ void loop() {
     OptionalPrintStats();
   }
 
-  Serial.println(data_values[ATTENTION_INDEX]);
+  // check attention values if needed (commented for demo)
+  //Serial.println(data_values[ATTENTION_INDEX]);
 
+  // set attention threshold
   if (data_values[ATTENTION_INDEX] > 60) {
-    //digitalWrite(LED_PIN, HIGH);
-    analogWrite(MOTOR_PIN, 90);
-    digitalWrite(LED_GREEN_PIN, HIGH); // Eva
-    digitalWrite(LED_RED_PIN, LOW); // Eva
+    analogWrite(MOTOR_PIN, 90); // turn motor on at constant speed
+    digitalWrite(LED_GREEN_PIN, HIGH); // turn green LED on
+    digitalWrite(LED_RED_PIN, LOW); // turn red LED off
   }
   else {
-    //digitalWrite(LED_PIN,LOW);
-    analogWrite(MOTOR_PIN, 0); // MAY NEED TO MAKE IT SMOOTHER?
-    digitalWrite(LED_GREEN_PIN, LOW); // Eva
-    digitalWrite(LED_RED_PIN, HIGH); // Eva
+    analogWrite(MOTOR_PIN, 0); // turn motor off
+    digitalWrite(LED_GREEN_PIN, LOW); // turn green LED off
+    digitalWrite(LED_RED_PIN, HIGH); // turn red LED on
   }
+
+  // every period update graphic display without stopping the code from running
+  if (millis() > time_now + period) {
+    time_now = millis(); // update current time
+    display.clearDisplay(); // clear display
+    display.setTextSize(2); // Draw 2X-scale text
+    display.setTextColor(WHITE); // white text on blue background
+    display.setCursor(0, 0);
+    display.print(F("Attention: "));
+    display.setCursor(0, 18);
+    display.print(data_values[ATTENTION_INDEX]); 
+    display.display(); // display info
+  }
+
 }
