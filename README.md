@@ -66,13 +66,15 @@ To print the values in the graphic display every 100 ms, we used millis() instea
 
 There were many other debugging instances, but the above three are fundamental to the correct functioning of the project and likely to happen to other people building similar devices, so we decided to highlight them.
 
-## Project Video 
+## Project Pictures and Videos 
 
 An initial video of the barebone product can be found below.
 
 [Link to Initial Video](Wheel_Video.mp4)
 
-We then incorporated a battery for increased portability, as well as a graphic display to be able to read the attention values the user outputs to the device in real time.
+We then incorporated a battery for increased portability, as well as a graphic display to be able to read the attention values the user outputs to the device in real time. A picture and a video of the final prototype cna be found below.
+
+[Link to Final Picture](https://github.com/evaesteban/IDD-Final-Project/blob/master/Wheel_Picture.jpeg)
 
 [Link to Final Video](https://github.com/evaesteban/IDD-Final-Project/blob/master/IMG_1105.mov)
 
